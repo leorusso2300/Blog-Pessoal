@@ -21,6 +21,9 @@ public class UserDatailsServiceImpl implements UserDetailsService{
 		Optional<Usuario> user = userRepository.findByUsuario(userName);
 		user.orElseThrow(() -> new UsernameNotFoundException(userName + "not found."));
 		
+		
+		//vê se o usuário ja existe
+		
 		return user.map(UserDetailsImpl:: new).get();
 	}
 }
