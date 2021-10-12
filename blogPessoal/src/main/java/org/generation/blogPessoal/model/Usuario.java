@@ -1,7 +1,7 @@
 package org.generation.blogPessoal.model;
 
-import java.util.List;
 
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -23,15 +22,18 @@ public class Usuario {
 	private long id;
 
 	@NotBlank(message = "O campo não pode estar vazio!")
-	@Size(min = 2, max = 100, message = "Número de caracteres inválidos!")
+	@Size(min = 2, max = 100, message = "Número de caracteres inválido!")
 	private String nome;
 
 	@NotBlank(message = "O campo não pode estar vazio!")
-	@Size(min = 5, max = 100, message = "Número de caracteres inválidos!")
+	@Size(min = 5, max = 100, message = "Número de caracteres inválido!")
 	private String usuario;
 
+	//@JsonFormat(pattern = "yyyy-mm-dd")
+	//private LocalDate dataNascimento;
+
 	@NotBlank(message = "O campo não pode estar vazio!")
-	@Size(min = 5, max = 100, message = "Número de caracteres inválidos!")
+	@Size(min = 5, max = 100, message = "Número de caracteres inválido!")
 	private String senha;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)

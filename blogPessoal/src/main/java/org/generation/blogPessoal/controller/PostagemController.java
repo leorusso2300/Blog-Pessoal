@@ -30,27 +30,27 @@ public class PostagemController {
 		return ResponseEntity.ok(repository.findAll());
 	}
 
-	@GetMapping("/{id}") // busca por id
+	@GetMapping("/{id}") 
 	public ResponseEntity<Postagem> GetById(@PathVariable long id) {
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping("/titulo/{titulo}") // busca por titulo
+	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Postagem>> GetByTitulo(@PathVariable String titulo) {
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 
-	@PostMapping // insere
+	@PostMapping 
 	public ResponseEntity<Postagem> post(@RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 	}
 
-	@PutMapping // Atualiza
+	@PutMapping 
 	public ResponseEntity<Postagem> put(@RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}
 
-	@DeleteMapping("/{id}")//deletar
+	@DeleteMapping("/{id}")
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
 
