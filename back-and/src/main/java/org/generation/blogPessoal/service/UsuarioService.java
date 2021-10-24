@@ -20,6 +20,7 @@ public class UsuarioService {
 	@Autowired
 
 	private UsuarioRepository repository;
+	public String nome;
 
 	public List<Usuario> listarUsuarios() {
 
