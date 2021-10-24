@@ -1,8 +1,9 @@
 package org.generation.blogPessoal.model;
 
-
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -27,14 +30,15 @@ public class Usuario {
 	@NotBlank(message = "O campo não pode estar vazio!")
 	@Size(min = 2, max = 100, message = "Número de caracteres inválido!")
 	private String nome;
-	
+
 	@ApiModelProperty(example = "email@email.com.br")
 	@NotBlank(message = "O atributo Usuário é Obrigatório!")
 	@Email(message = "O atributo Usuário deve ser um email válido!")
 	private String usuario;
 
-	//@JsonFormat(pattern = "yyyy-mm-dd")
-	//private LocalDate dataNascimento;
+	@Column(name = "DataNascimento")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataNascimento;
 
 	@NotBlank(message = "O campo não pode estar vazio!")
 	@Size(min = 5, max = 100, message = "Número de caracteres inválido!")
@@ -50,6 +54,14 @@ public class Usuario {
 		this.nome = nome;
 		this.usuario = usuario;
 		this.senha = senha;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	public Usuario() {

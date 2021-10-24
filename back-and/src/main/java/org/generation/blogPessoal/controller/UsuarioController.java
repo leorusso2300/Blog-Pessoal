@@ -2,9 +2,9 @@ package org.generation.blogPessoal.controller;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.generation.blogPessoal.model.UserLogin;
 import org.generation.blogPessoal.model.Usuario;
-import org.generation.blogPessoal.repository.UsuarioRepository;
 import org.generation.blogPessoal.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,44 +27,39 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	@Autowired
-	private UsuarioRepository repository;
-
-	@GetMapping
-	public ResponseEntity<List<Usuario>> GetAll() {
-		return ResponseEntity.ok(repository.findAll());
+	@GetMapping("/all")
+	public ResponseEntity<List<Usuario>> getAll() {
+		return ResponseEntity.ok(usuarioService.listarUsuarios());
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> GetById(@PathVariable long id) {
-		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+	@PutMapping("/atualizar")
+	public ResponseEntity<Usuario> putUsuario(@RequestBody Usuario usuario) {
+
+		return usuarioService.atualizarUsuario(usuario).map(resp -> ResponseEntity.status(HttpStatus.OK).body(resp))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Usuario>> getByName(@PathVariable String nome) {
-		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(nome));
-	}
-
-	@PutMapping
-	public ResponseEntity<Usuario> put(@RequestBody Usuario usuario) {
-		return ResponseEntity.ok(repository.save(usuario));
-	}
-
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable long id) {
-		repository.deleteById(id);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Long> deleteUsuario(@PathVariable Long id) {
+		boolean isRemoved = usuarioService.excluirUsuario(id);
+		if (!isRemoved) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 
 	@PostMapping("/logar")
 	public ResponseEntity<UserLogin> Autentication(@RequestBody Optional<UserLogin> user) {
-		return usuarioService.Logar(user).map(resp -> ResponseEntity.ok(resp))
+		return usuarioService.logarUsuario(user).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 
 	}
 
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> Post(@RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.CadastrarUsuario(usuario));
+		return usuarioService.cadastrarUsuario(usuario)
+				.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 
 }
