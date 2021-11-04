@@ -36,6 +36,7 @@ public class Usuario {
 	@Email(message = "O atributo Usuário deve ser um email válido!")
 	private String usuario;
 
+	
 	@Column(name = "DataNascimento")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataNascimento;
@@ -43,6 +44,11 @@ public class Usuario {
 	@NotBlank(message = "O campo não pode estar vazio!")
 	@Size(min = 5, max = 100, message = "Número de caracteres inválido!")
 	private String senha;
+	
+	private String foto;
+	private String tipo; 
+
+	
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
@@ -70,6 +76,21 @@ public class Usuario {
 
 	public long getId() {
 		return id;
+	}
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public void setId(long id) {
