@@ -23,11 +23,11 @@ public class Postagem {
 	private long id;
 
 	@NotBlank(message = "O titulo não pode estar vazio!")
-	@Size(min = 5, max = 1500, message = "Número de caracteres inválido!")
+	@Size(min = 1, max = 1500, message = "Número de caracteres inválido!")
 	private String titulo;
 
 	@NotBlank(message = "A postagem não pode estar vazia!")
-	@Size(min = 5, max = 255, message = "Número de caracteres inválido!")
+	@Size(min = 1, max = 255, message = "Número de caracteres inválido!")
 	private String postagem;
 
 	@Temporal(TemporalType.TIMESTAMP)
