@@ -17,28 +17,16 @@ import com.sun.istack.NotNull;
 @Table(name = "tb_tema")
 public class Tema {
 
-	@Id	
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@NotNull
 	private String descricao;
-	
-	private long qtd;
-	
+
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("tema")
 	private List<Postagem> postagem;
-	
-	
-
-	public long getQtd() {
-		return qtd;
-	}
-
-	public void setQtd(long qtd) {
-		this.qtd = qtd;
-	}
 
 	public long getId() {
 		return id;
@@ -63,5 +51,5 @@ public class Tema {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
-	
+
 }
